@@ -1,54 +1,43 @@
 <?php /** @var \ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList $block */ ?>
 <?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()) : ?>
-    <?php
-    $type = 'widget-product-grid';
-    $mode = 'grid';
-
-    $categories = $block->getCategoryCollection()->getItems();
-    ?>
-    <div class="block widget block-products-list block-categories-list <?= /* @noEscape */
-    $mode ?>">
+    <?php $categories = $block->getCategoryCollection()->getItems() ?>
+    <div class="block widget block-products-list block-categories-list grid">
         <?php if ($block->getTitle()) : ?>
             <div class="block-title">
                 <strong><?= $block->escapeHtml(__($block->getTitle())) ?></strong>
             </div>
         <?php endif ?>
         <div class="block-content">
-            <div class="products-<?= /* @noEscape */
-            $mode ?> <?= /* @noEscape */
-            $mode ?>">
-                <ol class="product-items <?= /* @noEscape */
-                $type ?>">
-                    <?php $iterator = 1; ?>
+            <div class="products-grid grid">
+                <ol class="product-items widget-product-grid">
                     <?php foreach ($categories as $category) : ?>
-                        <?= /* @noEscape */
-                        ($iterator++ == 1) ? '<li class="product-item">' : '</li><li class="product-item">' ?>
-                        <?php $categoryImage = $block->getImage($category); ?>
-                        <div class="product-item-info">
-                            <a href="<?= $block->escapeUrl(
-                                $category->getUrl()
-                            ) ?>" class="product-item-photo" title="<?= $block->escapeHtmlAttr(
-                                $category->getName()
-                            ) ?>">
-                                <?= $categoryImage ?>
-                                <?= $category->getData('image') ?>
-                                <img src="<?= $categoryImage ?>" alt="<?= $block->escapeHtmlAttr(
-                                    $category->getName()
-                                ) ?>" loading="lazy"/>
-                            </a>
-                            <?php if ($block->getData('show_name') === 'true'): ?>
-                                <div class="product-item-details">
-                                    <strong class="product-item-name">
-                                        <a title="<?= $block->escapeHtml($category->getName()) ?>"
-                                           href="<?= $block->escapeUrl($category->getUrl()) ?>"
-                                           class="product-item-link">
-                                            <?= $block->escapeHtml($category->getName()) ?>
-                                        </a>
-                                    </strong>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <?= ($iterator == count($categories) + 1) ? '</li>' : '' ?>
+                        <li class="product-item">
+                            <?php $categoryImage = $block->getImage($category); ?>
+                            <div class="product-item-info">
+                                <a href="<?= $block->escapeUrl($category->getUrl()) ?>"
+                                   class="product-item-photo"
+                                   title="<?= $block->escapeHtmlAttr($category->getName()) ?>">
+                                    <img
+                                        src="<?= $categoryImage->getUrl() ?>"
+                                        alt="<?= $block->escapeHtmlAttr($category->getName()) ?>"
+                                        loading="lazy"
+                                        width="<?= $categoryImage->getWidth() ?>"
+                                        height="<?= $categoryImage->getHeight() ?>"
+                                    />
+                                </a>
+                                <?php if ($block->getData('show_name') === 'true'): ?>
+                                    <div class="product-item-details">
+                                        <strong class="product-item-name">
+                                            <a title="<?= $block->escapeHtml($category->getName()) ?>"
+                                               href="<?= $block->escapeUrl($category->getUrl()) ?>"
+                                               class="product-item-link">
+                                                <?= $block->escapeHtml($category->getName()) ?>
+                                            </a>
+                                        </strong>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </li>
                     <?php endforeach ?>
                 </ol>
             </div>

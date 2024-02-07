@@ -12,14 +12,17 @@
 
 namespace ParadoxLabs\PageBuilderWidgets\Block\Category;
 
+use Hyva\Theme\Service\CurrentTheme;
 use Magento\Catalog\Block\Category\View;
 use Magento\Catalog\Block\Product\Context;
 use Magento\Catalog\Block\Product\Widget\Html\Pager;
+use Magento\Catalog\Helper\Image;
 use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ResourceModel\Category\Collection;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Framework\App\Http\Context as HttpContext;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -27,7 +30,6 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\Element\Template;
 use Magento\Widget\Block\BlockInterface;
-use Magento\Widget\Helper\Conditions;
 
 /**
  * Catalog Products List widget block
@@ -72,12 +74,17 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     protected $json;
 
     /**
+     * @var \Magento\Catalog\Helper\Image
+     */
+    protected $imageHelper;
+
+    /**
      * @param Context $context
      * @param CollectionFactory $categoryCollectionFactory
      * @param HttpContext $httpContext
-     * @param Conditions $conditionsHelper
      * @param \Magento\Catalog\Block\Category\View $categoryView
      * @param Json|null $json
+     * @param \Magento\Catalog\Helper\Image $imageHelper
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -87,6 +94,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
         HttpContext $httpContext,
         View $categoryView,
         Json $json,
+        Image $imageHelper,
         array $data = []
     ) {
         parent::__construct(
@@ -98,6 +106,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
         $this->httpContext               = $httpContext;
         $this->json                      = $json;
         $this->categoryView              = $categoryView;
+        $this->imageHelper               = $imageHelper;
     }
 
     /**
@@ -161,6 +170,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     {
         /** @var $collection Collection */
         $collection = $this->categoryCollectionFactory->create();
+        $collection->addIsActiveFilter();
         $collection->addAttributeToSelect('*');
 
         if ($this->getData('store_id') !== null) {
@@ -310,7 +320,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     private function getWidgetPagerBlockName()
     {
         $pageName = $this->getData('page_var_name');
-        $pagerBlockName = 'widget.products.list.pager';
+        $pagerBlockName = 'widget.category.list.pager';
 
         if (!$pageName) {
             return $pagerBlockName;
@@ -321,15 +331,17 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
 
     /**
      * @param \Magento\Catalog\Model\Category $category
-     * @param string $attribute
-     * @return string
+     * @param string $attributeCode
+     * @param array $options
+     * @return \Magento\Catalog\Helper\Image
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getImage(Category $category, string $attribute = 'image')
+    public function getImage(Category $category, string $attributeCode = 'image', array $options = [])
     {
-        // TODO: Placeholder
-        // TODO: Resize image?
-        return $category->getImageUrl($attribute);
+        $image = $this->imageHelper->init($category, 'product_base_image', $options);
+        $image->setImageFile('catalog/category/' . $category->getData($attributeCode));
+
+        return $image;
     }
 
     /**
@@ -339,4 +351,30 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     {
         return $this->_scopeConfig->getValue('catalog/seo/category_url_suffix');
     }
+
+    /**
+     * Get relevant path to template
+     *
+     * @return string
+     */
+    public function getTemplate()
+    {
+        $template = parent::getTemplate();
+
+        /**
+         * If Hyva, inject Hyva path
+         */
+        if (class_exists(CurrentTheme::class)) {
+            $currentTheme = ObjectManager::getInstance()->get(
+                CurrentTheme::class
+            );
+
+            if ($currentTheme->isHyva() && strpos($template, 'hyva') === false) {
+                $template = str_replace('::', '::hyva/', $template);
+            }
+        }
+
+        return $template;
+    }
+
 }

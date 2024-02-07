@@ -1,0 +1,33 @@
+<?php /** @var \ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList $block */ ?>
+<?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()) : ?>
+    <?php $categories = $block->getCategoryCollection()->getItems() ?>
+    <div class="widget-category-grid">
+        <?php if ($block->getTitle()) : ?>
+            <div class="block-title">
+                <strong><?= $block->escapeHtml(__($block->getTitle())) ?></strong>
+            </div>
+        <?php endif ?>
+        <ol class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 text-lg font-semibold text-center">
+            <?php foreach ($categories as $category) : ?>
+                <li class="card card-interactive p-0">
+                    <?php $categoryImage = $block->getImage($category); ?>
+                    <a href="<?= $block->escapeUrl($category->getUrl()) ?>"
+                       class="block"
+                       title="<?= $block->escapeHtmlAttr($category->getName()) ?>"
+                    >
+                        <img
+                            src="<?= $categoryImage->getUrl() ?>"
+                            alt="<?= $block->escapeHtmlAttr($category->getName()) ?>"
+                            loading="lazy"
+                            width="<?= $categoryImage->getWidth() ?>"
+                            height="<?= $categoryImage->getHeight() ?>"
+                        />
+                        <?php if ($block->getData('show_name') === 'true'): ?>
+                            <div class="p-2"><?= $block->escapeHtml($category->getName()) ?></div>
+                        <?php endif; ?>
+                    </a>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    </div>
+<?php endif; ?>

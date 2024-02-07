@@ -10,6 +10,7 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
 <?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()): ?>
     <?php $categories = $block->getCategoryCollection()->getItems() ?>
     <ul class="glider-contain clear widget-product-carousel">
+        <!-- TODO: Hyva compatible carousel and styling -->
         <div data-role="glider-content">
             <?php foreach ($categories as $category): ?>
                 <li class="category-item">
