@@ -1,0 +1,37 @@
+//
+//  Default appearance styles
+//  _____________________________________________
+
+& when (@media-common = true) {
+    [data-content-type='row'] {
+        li.product-item {
+            text-align: left;
+        }
+    }
+
+    .pagebuilder-column {
+        .widget-product-grid {
+            .product-item {
+                max-width: 100%;
+                min-width: 150px;
+            }
+        }
+
+        [data-content-type='categories'] {
+            .block.widget {
+                .products-grid {
+                    .widget-product-grid.product-items {
+                        .product-item {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+
+            .product-item-name {
+                font-weight: 600;
+                text-align: center;
+            }
+        }
+    }
+}

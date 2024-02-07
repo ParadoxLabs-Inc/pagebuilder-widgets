@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="AppearanceSourceCategories" type="Magento\PageBuilder\Model\Source\VisualSelect">
+        <arguments>
+            <argument name="optionsSize" xsi:type="string">large</argument>
+            <argument name="optionsData" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="value" xsi:type="string">grid</item>
+                    <item name="title" xsi:type="string" translate="true">Category Grid</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder::css/images/content-type/products/appearance/grid.svg</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="string">carousel</item>
+                    <item name="title" xsi:type="string" translate="true">Category Carousel</item>
+                    <item name="icon" xsi:type="string">Magento_PageBuilder::css/images/content-type/products/appearance/carousel.svg</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

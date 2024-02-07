@@ -1,0 +1,53 @@
+<?php
+/** @var CategoriesList $block */
+
+/** @var Escaper $escaper */
+
+use Magento\Framework\Escaper;
+use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
+
+?>
+<?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()): ?>
+    <?php
+    $type       = 'widget-product-carousel';
+    $categories = $block->getCategoryCollection()->getItems();
+    ?>
+    <ul class="glider-contain clear <?= /* @noEscape */
+    $type ?>">
+        <!-- TODO: Tailwind styles here -->
+        <div data-role="glider-content"
+             class="mx-auto grid gap-4 sm:grid-cols-2 lg:grid-cols-4 relative overflow-y-hidden overflow-x-scroll">
+            <?php $iterator = 0; ?>
+            <?php foreach ($categories as $category): ?>
+                <?php $iterator++; ?>
+                <?= /* @noEscape */
+                ($iterator === 1) ? '<li class="category-item group mr-5 lg:mr-6 last:mr-0.25">'
+                    : '</li><li class="category-item group mr-5 lg:mr-6 last:mr-0.25">' ?>
+                <?php $categoryImage = $block->getImage($category); ?>
+                <a href="<?= $escaper->escapeUrl($category->getUrl()) ?>"
+                   class="clear cat-info"
+                   title="<?= $escaper->escapeHtmlAttr($category->getName()) ?>">
+                    <div class="img">
+                        <img class="object-contain"
+                             src="<?= $escaper->escapeUrl($categoryImage) ?>"
+                             alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
+                             loading="lazy"/>
+                    </div>
+                    <?php if ($block->getData('show_name') === 'true'): ?>
+                        <span class="category-name">
+                            <span><?= $escaper->escapeHtml($category->getName()) ?></span>
+                            <span class="count group-hover:bg-orange group-hover:text-white">
+                                <?= $escaper->escapeHtml($category->getIndexedProductCount()) ?>
+                            </span>
+                        </span>
+                        <p class="subtext"><?= /** @noEscape */
+                            $category->getThumbnailSubtext() ?></p>
+                    <?php endif ?>
+                </a>
+                <?= ($iterator == count($categories)) ? '</li>' : '' ?>
+            <?php endforeach ?>
+        </div>
+        <?= /** @noEscape */
+        $block->getBlockHtml('pagebuilder.carousel.nav') ?>
+    </ul>
+<?php endif; ?>
