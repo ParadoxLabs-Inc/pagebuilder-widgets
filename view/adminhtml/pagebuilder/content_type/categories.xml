@@ -63,7 +63,7 @@
                         <attribute name="show_arrows" source="data-show-arrows"/>
                         <attribute name="show_dots" source="data-show-dots"/>
                         <attribute name="carousel_mode" source="data-carousel-mode"/>
-                        <attribute name="is_brand" source="data-is-brand" />
+                        <attribute name="is_brand" source="data-is-brand"/>
                         <static_attribute source="data-center-padding" value="90px"/>
                         <html name="html" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/store-id"/>
                         <css name="css_classes"/>

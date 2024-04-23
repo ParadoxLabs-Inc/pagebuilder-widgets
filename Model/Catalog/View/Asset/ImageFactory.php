@@ -19,12 +19,16 @@ use Magento\Catalog\Model\View\Asset\VirtualCategoryImage;
  */
 class ImageFactory extends \Magento\Catalog\Model\View\Asset\ImageFactory
 {
+    /**
+     * @param array $data
+     * @return \Magento\Catalog\Model\View\Asset\Image|\Magento\Catalog\Model\View\Asset\VirtualCategoryImage|mixed
+     */
     public function create(array $data = [])
     {
         // If image path starts with catalog/category/, use a separate asset class
         if (isset($data['filePath'])
             && is_string($data['filePath'])
-            && strpos($data['filePath'], 'catalog/category/') === 0) {
+            && strpos($data['filePath'], 'catalog/category/') !== false) {
             return $this->_objectManager->create(
                 VirtualCategoryImage::class,
                 $data

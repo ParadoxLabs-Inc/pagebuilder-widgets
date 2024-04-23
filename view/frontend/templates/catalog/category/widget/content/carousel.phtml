@@ -13,15 +13,18 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
         <div data-role="glider-content">
             <?php foreach ($categories as $category): ?>
                 <li class="category-item">
-                    <?php $categoryImage = $block->getImage($category); ?>
+                    <?php $image = $block->getImage($category); ?>
                     <a href="<?= $escaper->escapeUrl($category->getUrl()) ?>"
                        class="clear cat-info"
                        title="<?= $escaper->escapeHtmlAttr($category->getName()) ?>">
                         <div class="img">
                             <img class="object-contain"
-                                 src="<?= $escaper->escapeUrl($categoryImage) ?>"
+                                 src="<?= $escaper->escapeUrl($image->getUrl()) ?>"
                                  alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
-                                 loading="lazy"/>
+                                 loading="lazy"
+                                 width="<?= $image->getWidth() ?>"
+                                 style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
+                            />
                         </div>
                         <?php if ($block->getData('show_name') === 'true'): ?>
                             <span class="category-name">

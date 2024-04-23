@@ -22,7 +22,7 @@
 
     <virtualType name="Magento\Catalog\Model\View\Asset\VirtualCategoryImage" type="Magento\Catalog\Model\View\Asset\Image">
         <arguments>
-            <argument name="mediaConfig" xsi:type="object">\ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Media\Config</argument>
+            <argument name="mediaConfig" xsi:type="object">ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Media\Config</argument>
         </arguments>
     </virtualType>
     <type name="Magento\Catalog\Model\Product\Image">

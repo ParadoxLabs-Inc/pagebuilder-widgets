@@ -39,8 +39,8 @@ use Magento\Widget\Block\BlockInterface;
  */
 class CategoriesList extends Template implements BlockInterface, IdentityInterface
 {
-    const DEFAULT_CATEGORIES_COUNT = 5;
-    const DEFAULT_CATEGORIES_PER_PAGE = 5;
+    protected const DEFAULT_CATEGORIES_COUNT = 5;
+    protected const DEFAULT_CATEGORIES_PER_PAGE = 5;
 
     /**
      * Instance of pager block
@@ -83,7 +83,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      * @param CollectionFactory $categoryCollectionFactory
      * @param HttpContext $httpContext
      * @param \Magento\Catalog\Block\Category\View $categoryView
-     * @param Json|null $json
+     * @param \Magento\Framework\Serialize\Serializer\Json $json
      * @param \Magento\Catalog\Helper\Image $imageHelper
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -334,12 +334,15 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      * @param string $attributeCode
      * @param array $options
      * @return \Magento\Catalog\Helper\Image
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getImage(Category $category, string $attributeCode = 'image', array $options = [])
     {
-        $image = $this->imageHelper->init($category, 'product_base_image', $options);
-        $image->setImageFile('catalog/category/' . $category->getData($attributeCode));
+        $prefix = strpos((string)$category->getData($attributeCode), 'catalog/category/') === false
+            ? 'catalog/category/'
+            : '';
+
+        $image  = $this->imageHelper->init($category, 'product_base_image', $options);
+        $image->setImageFile($prefix . str_replace('/media/', '', (string)$category->getData($attributeCode)));
 
         return $image;
     }
@@ -349,7 +352,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      */
     public function getCategorySuffix(): string
     {
-        return $this->_scopeConfig->getValue('catalog/seo/category_url_suffix');
+        return (string)$this->_scopeConfig->getValue('catalog/seo/category_url_suffix');
     }
 
     /**
@@ -359,7 +362,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      */
     public function getTemplate()
     {
-        $template = parent::getTemplate();
+        $template = (string)parent::getTemplate();
 
         /**
          * If Hyva, inject Hyva path

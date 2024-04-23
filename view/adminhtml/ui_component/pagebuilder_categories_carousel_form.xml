@@ -89,7 +89,7 @@
                 </checkbox>
             </formElements>
         </field>
-        <field name="autoplay_speed" sortOrder="30" formElement="input">
+        <field name="autoplay_speed" sortOrder="30">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="number">4000</item>

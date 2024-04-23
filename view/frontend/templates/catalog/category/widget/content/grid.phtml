@@ -12,17 +12,17 @@
                 <ol class="product-items widget-product-grid">
                     <?php foreach ($categories as $category) : ?>
                         <li class="product-item">
-                            <?php $categoryImage = $block->getImage($category); ?>
+                            <?php $image = $block->getImage($category); ?>
                             <div class="product-item-info">
                                 <a href="<?= $block->escapeUrl($category->getUrl()) ?>"
                                    class="product-item-photo"
                                    title="<?= $block->escapeHtmlAttr($category->getName()) ?>">
                                     <img
-                                        src="<?= $categoryImage->getUrl() ?>"
+                                        src="<?= $image->getUrl() ?>"
                                         alt="<?= $block->escapeHtmlAttr($category->getName()) ?>"
                                         loading="lazy"
-                                        width="<?= $categoryImage->getWidth() ?>"
-                                        height="<?= $categoryImage->getHeight() ?>"
+                                        width="<?= $image->getWidth() ?>"
+                                        style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
                                     />
                                 </a>
                                 <?php if ($block->getData('show_name') === 'true'): ?>

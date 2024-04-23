@@ -10,17 +10,17 @@
         <ol class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 text-lg font-semibold text-center">
             <?php foreach ($categories as $category) : ?>
                 <li class="card card-interactive p-0">
-                    <?php $categoryImage = $block->getImage($category); ?>
+                    <?php $image = $block->getImage($category); ?>
                     <a href="<?= $block->escapeUrl($category->getUrl()) ?>"
                        class="block"
                        title="<?= $block->escapeHtmlAttr($category->getName()) ?>"
                     >
                         <img
-                            src="<?= $categoryImage->getUrl() ?>"
+                            src="<?= $image->getUrl() ?>"
                             alt="<?= $block->escapeHtmlAttr($category->getName()) ?>"
                             loading="lazy"
-                            width="<?= $categoryImage->getWidth() ?>"
-                            height="<?= $categoryImage->getHeight() ?>"
+                            width="<?= $image->getWidth() ?>"
+                            style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
                         />
                         <?php if ($block->getData('show_name') === 'true'): ?>
                             <div class="p-2"><?= $block->escapeHtml($category->getName()) ?></div>

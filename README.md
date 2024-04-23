@@ -20,6 +20,13 @@ Features
 
 * Categories widget to add a grid or carousel of categories to a content page or block
 
+Possible Future Development
+===========================
+
+* Accordion layout
+* Carousel layout with arbitrary content blocks
+* 'Scheduled Content' layout that automatically shows/hides the content within it based on date/time (client-side)
+
 Installation and Usage
 ======================
 
