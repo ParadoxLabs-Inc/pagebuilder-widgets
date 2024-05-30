@@ -7,9 +7,18 @@
         "magento/framework": "*",
         "magento/module-page-builder": "^1.0||^2.0"
     },
-    "license": [
-        "Apache Software License (ASL)"
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Ryan Hoerr",
+            "email": "ryan@paradoxlabs.com"
+        }
     ],
+    "archive": {
+        "exclude": [
+            ".github"
+        ]
+    },
     "autoload": {
         "files": [
             "registration.php"
