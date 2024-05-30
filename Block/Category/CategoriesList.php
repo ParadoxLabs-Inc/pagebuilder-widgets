@@ -26,6 +26,8 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\StateException;
+use Magento\Framework\Registry;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\Element\Template;
@@ -79,12 +81,18 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     protected $imageHelper;
 
     /**
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
+
+    /**
      * @param Context $context
      * @param CollectionFactory $categoryCollectionFactory
      * @param HttpContext $httpContext
      * @param \Magento\Catalog\Block\Category\View $categoryView
      * @param \Magento\Framework\Serialize\Serializer\Json $json
      * @param \Magento\Catalog\Helper\Image $imageHelper
+     * @param \Magento\Framework\Registry $registry
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -95,6 +103,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
         View $categoryView,
         Json $json,
         Image $imageHelper,
+        Registry $registry,
         array $data = []
     ) {
         parent::__construct(
@@ -107,6 +116,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
         $this->json                      = $json;
         $this->categoryView              = $categoryView;
         $this->imageHelper               = $imageHelper;
+        $this->registry                  = $registry;
     }
 
     /**
@@ -145,7 +155,11 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
             $this->json->serialize($this->getRequest()->getParams()),
             $this->getTemplate(),
             $this->getTitle(),
+            $this->getConditionOption(),
+            $this->getCategoryId(),
             $this->getCategoryIds(),
+            $this->getSortOrder(),
+            $this->getShowName(),
         ];
     }
 
@@ -154,7 +168,22 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      */
     protected function _beforeToHtml()
     {
-        $this->setCategoryCollection($this->createCollection());
+        $collection = $this->createCollection();
+
+        /**
+         * If sort_order is position, manually sort the collection to match the input order
+         */
+        $isDefinedCategories = !in_array(
+            $this->getData('condition_option'),
+            ['parent_category_id', 'current_category_childs'],
+            true
+        );
+
+        if ($this->getSortOrder() === 'position' && $isDefinedCategories) {
+            $this->applyManualPositionSorting($collection);
+        }
+
+        $this->setCategoryCollection($collection);
 
         return parent::_beforeToHtml();
     }
@@ -186,14 +215,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
         $collection->setPageSize($this->getPageSize())
                    ->setCurPage($this->getRequest()->getParam($this->getData('page_var_name'), 1));
 
-        if ($this->getData('category_ids')) {
-            $collection->addAttributeToFilter(
-                'entity_id',
-                [
-                    'in' => explode(',', (string)$this->getData('category_ids')),
-                ]
-            );
-        }
+        $this->applyCategoryFilters($collection);
 
         /**
          * Prevent retrieval of duplicate records. This may occur when multiselect product attribute matches
@@ -202,6 +224,108 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
         $collection->distinct(true);
 
         return $collection;
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function applyManualPositionSorting(Collection $collection): void
+    {
+        // Get the defined order of categories, with each ID in sequence
+        $desiredOrder = explode(',', (string)$this->getData('category_ids'));
+        $sortedItems  = [];
+
+        // Get the loaded items and clear the collection
+        $items = $collection->getItems();
+        $collection->removeAllItems();
+
+        // Loop over the defined order of IDs, and add each one back to the collection in sequence
+        foreach ($desiredOrder as $itemId) {
+            if (isset($items[ $itemId ])) {
+                $collection->addItem($items[ $itemId ]);
+            }
+        }
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function applyCategoryFilters(Collection $collection): void
+    {
+        match ($this->getData('condition_option')) {
+            'parent_category_id' => $this->applyCategoryFiltersParentId($collection),
+            'current_category_childs' => $this->applyCategoryFiltersContext($collection),
+            default => $this->applyCategoryFiltersEntityId($collection),
+        };
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function applyCategoryFiltersEntityId(Collection $collection): void
+    {
+        if (empty($this->getData('category_ids'))) {
+            throw new StateException(
+                __('Please select one or more categories to display.')
+            );
+        }
+
+        $collection->addAttributeToFilter(
+            'entity_id',
+            [
+                'in' => explode(',', (string)$this->getData('category_ids')),
+            ]
+        );
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\StateException
+     */
+    protected function applyCategoryFiltersParentId(Collection $collection): void
+    {
+        if (empty($this->getData('category_id'))) {
+            throw new StateException(
+                __('Please select a parent category to display.')
+            );
+        }
+
+        $collection->addAttributeToFilter(
+            'parent_id',
+            $this->getData('category_ids')
+        );
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @return void
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function applyCategoryFiltersContext(Collection $collection): void
+    {
+        $currentCategory = $this->registry->registry('current_category');
+        if ($currentCategory instanceof Category) {
+            $collection->addAttributeToFilter('parent_id', $currentCategory->getId());
+        } else {
+            // If we don't have a current_category in this context, fall back to the store's root category
+            $collection->addAttributeToFilter(
+                'parent_id',
+                $this->_storeManager->getStore()->getRootCategoryId()
+            );
+        }
+
+        // In context mode, only show nav-enabled categories
+        $collection->addAttributeToFilter('include_in_menu', 1);
     }
 
     /**
@@ -379,5 +503,4 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
 
         return $template;
     }
-
 }

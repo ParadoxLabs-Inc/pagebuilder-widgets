@@ -71,7 +71,7 @@
                 <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
                 <exports>
                     <link name="category_idsVisible">${$.parentName}.category_ids:visible</link>
-                    <!--<link name="parent_category_idVisible">${$.parentName}.category_ids:visible</link>-->
+                    <link name="parent_category_idVisible">${$.parentName}.category_id:visible</link>
                     <link name="value">${$.parentName}.sort_order:filter</link>
                 </exports>
                 <dataScope>condition_option</dataScope>
@@ -90,7 +90,40 @@
                                 <item name="value" xsi:type="string">parent_category_id</item>
                                 <item name="title" xsi:type="string" translate="true">Parent Category</item>
                             </option>
+                            <option name="2" xsi:type="array">
+                                <item name="size" xsi:type="string">small</item>
+                                <item name="value" xsi:type="string">current_category_childs</item>
+                                <item name="title" xsi:type="string" translate="true">Context</item>
+                            </option>
                         </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="category_id" component="Magento_Catalog/js/components/new-category" sortOrder="30" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
+                <label translate="true">Show Subcategories of</label>
+                <dataScope>category_ids</dataScope>
+                <componentType>field</componentType>
+                <visible>false</visible>
+                <listens>
+                    <link name="${ $.namespace }.${ $.namespace }:responseData">setParsed</link>
+                </listens>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Catalog\Ui\Component\Product\Form\Categories\Options"/>
                     </settings>
                 </select>
             </formElements>
@@ -107,7 +140,7 @@
             </argument>
             <settings>
                 <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
-                <label translate="true">Categories</label>
+                <label translate="true">Show Categories</label>
                 <dataScope>category_ids</dataScope>
                 <componentType>field</componentType>
                 <visible>true</visible>
@@ -151,7 +184,7 @@
                     <item name="breakLine" xsi:type="boolean">false</item>
                 </item>
             </argument>
-            <field name="categories_count" sortOrder="10">
+            <field name="categories_count" sortOrder="10" formElement="input">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="default" xsi:type="number">5</item>

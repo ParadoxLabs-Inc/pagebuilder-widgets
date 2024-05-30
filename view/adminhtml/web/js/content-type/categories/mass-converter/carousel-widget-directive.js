@@ -40,6 +40,8 @@ define(
                 _proto.fromDom = function fromDom(data, config) {
                     var attributes = _widgetDirectiveAbstr.prototype.fromDom.call(this, data, config);
 
+                    data.condition_option = attributes.condition_option;
+                    data.category_id = attributes.category_id;
                     data.category_ids = attributes.category_ids.split(',');
                     data.categories_count = attributes.categories_count;
                     data.sort_order = attributes.sort_order;
@@ -63,14 +65,20 @@ define(
                         anchor_text: "",
                         id_path: "",
                         show_pager: 0,
+                        condition_option: data.condition_option,
                         categories_count: data.categories_count,
-                        category_ids: data.category_ids,
                         show_name: data.show_name,
                         type_name: "Catalog Categories Carousel"
                     };
 
                     if (data.sort_order) {
                         attributes.sort_order = data.sort_order;
+                    }
+                    if (data.category_id) {
+                        attributes.category_id = data.category_id;
+                    }
+                    if (data.category_ids) {
+                        attributes.category_ids = data.category_ids;
                     }
 
                     (0, _object.set)(data, config.html_variable, this.buildDirective(attributes));
