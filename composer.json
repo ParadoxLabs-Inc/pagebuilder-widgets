@@ -1,7 +1,7 @@
 {
     "name": "paradoxlabs/pagebuilder-widgets",
     "version": "1.0.0",
-    "description": "N/A",
+    "description": "Addon widgets and capabilities for Magento Page Builder.",
     "type": "magento2-module",
     "require": {
         "magento/framework": "*",
