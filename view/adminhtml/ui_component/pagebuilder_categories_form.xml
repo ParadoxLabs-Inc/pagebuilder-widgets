@@ -113,7 +113,7 @@
             <settings>
                 <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
                 <label translate="true">Show Subcategories of</label>
-                <dataScope>category_ids</dataScope>
+                <dataScope>category_id</dataScope>
                 <componentType>field</componentType>
                 <visible>false</visible>
                 <listens>

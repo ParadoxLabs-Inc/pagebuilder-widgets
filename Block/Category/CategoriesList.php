@@ -301,7 +301,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
 
         $collection->addAttributeToFilter(
             'parent_id',
-            $this->getData('category_ids')
+            $this->getData('category_id')
         );
     }
 
