@@ -18,10 +18,20 @@ Requirements
 Features
 ========
 
-* Categories widget to add a grid or carousel of categories to a content page or block
+## Categories content type
 
-Possible Future Development
-===========================
+Use this Categories content type to add a grid or carousel of categories to any Page Builder content area. This includes CMS pages, CMS blocks, description fields, and more.
+
+### Categories block in Page Builder
+<img width="901" alt="" src="https://github.com/ParadoxLabs-Inc/pagebuilder-widgets/assets/13335952/243b7edf-0203-4aea-9788-70b315b5cf5a">
+
+### Categories block settings
+<img width="895" alt="" src="https://github.com/ParadoxLabs-Inc/pagebuilder-widgets/assets/13335952/4dc1737d-d974-48aa-a871-9fe29e2ed2ca">
+
+### Categories grid on the frontend
+<img width="902" alt="" src="https://github.com/ParadoxLabs-Inc/pagebuilder-widgets/assets/13335952/3f38f166-7955-44b4-a642-5a635156b3d7">
+
+## Possible Future Development
 
 * Accordion layout
 * Carousel layout with arbitrary content blocks
