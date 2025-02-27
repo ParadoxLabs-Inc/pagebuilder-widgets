@@ -1,5 +1,8 @@
 # ParadoxLabs_PageBuilderWidgets Changelog
 
+## 1.0.2 - Feb 27, 2025
+- Added Hyva-compatible category carousel template
+
 ## 1.0.1 - May 31, 2024
 - Fixed Parent Category selector failing to save (#4)
 
