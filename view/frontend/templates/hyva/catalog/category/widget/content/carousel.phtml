@@ -105,10 +105,10 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
                              role="group"
                              aria-label="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                         >
-                            <a href="<?= $escaper->escapeUrl($category->getUrl()) ?>" class="block text-center hover:underline">
+                            <a href="<?= $escaper->escapeHtmlAttr($category->getUrl()) ?>" class="block text-center hover:underline">
                                 <img
                                     class="mx-auto"
-                                    src="<?= $escaper->escapeUrl($image->getUrl()) ?>"
+                                    src="<?= $escaper->escapeHtmlAttr($image->getUrl()) ?>"
                                     alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                                     style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
                                     loading="lazy"

@@ -14,12 +14,12 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
             <?php foreach ($categories as $category): ?>
                 <li class="category-item">
                     <?php $image = $block->getImage($category); ?>
-                    <a href="<?= $escaper->escapeUrl($category->getUrl()) ?>"
+                    <a href="<?= $escaper->escapeHtmlAttr($category->getUrl()) ?>"
                        class="clear cat-info"
                        title="<?= $escaper->escapeHtmlAttr($category->getName()) ?>">
                         <div class="img">
                             <img class="object-contain"
-                                 src="<?= $escaper->escapeUrl($image->getUrl()) ?>"
+                                 src="<?= $escaper->escapeHtmlAttr($image->getUrl()) ?>"
                                  alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                                  loading="lazy"
                                  width="<?= $image->getWidth() ?>"

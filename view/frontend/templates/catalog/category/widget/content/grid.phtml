@@ -14,7 +14,7 @@
                         <li class="product-item">
                             <?php $image = $block->getImage($category); ?>
                             <div class="product-item-info">
-                                <a href="<?= $block->escapeUrl($category->getUrl()) ?>"
+                                <a href="<?= $block->escapeHtmlAttr($category->getUrl()) ?>"
                                    class="product-item-photo"
                                    title="<?= $block->escapeHtmlAttr($category->getName()) ?>">
                                     <img
@@ -29,7 +29,7 @@
                                     <div class="product-item-details">
                                         <strong class="product-item-name">
                                             <a title="<?= $block->escapeHtml($category->getName()) ?>"
-                                               href="<?= $block->escapeUrl($category->getUrl()) ?>"
+                                               href="<?= $block->escapeHtmlAttr($category->getUrl()) ?>"
                                                class="product-item-link">
                                                 <?= $block->escapeHtml($category->getName()) ?>
                                             </a>
