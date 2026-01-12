@@ -14,9 +14,6 @@ namespace ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Asset;
 
 use Magento\Catalog\Model\View\Asset\VirtualCategoryImage;
 
-/**
- * Class ImageFactory
- */
 class ImageFactory extends \Magento\Catalog\Model\View\Asset\ImageFactory
 {
     /**

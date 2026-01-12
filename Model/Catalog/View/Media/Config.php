@@ -12,9 +12,6 @@
 
 namespace ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Media;
 
-/**
- * Class Config
- */
 class Config extends \Magento\Catalog\Model\Product\Media\Config
 {
     protected const PATH = 'catalog/category';

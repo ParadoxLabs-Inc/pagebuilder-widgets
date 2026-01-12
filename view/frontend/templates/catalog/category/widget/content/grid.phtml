@@ -1,25 +1,25 @@
 <?php /** @var \ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList $block */ ?>
-<?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()) : ?>
+<?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()): ?>
     <?php $categories = $block->getCategoryCollection()->getItems() ?>
     <div class="block widget block-products-list block-categories-list grid">
-        <?php if ($block->getTitle()) : ?>
+        <?php if ($block->getTitle()): ?>
             <div class="block-title">
-                <strong><?= $block->escapeHtml(__($block->getTitle())) ?></strong>
+                <strong><?= $escaper->escapeHtml(__($block->getTitle())) ?></strong>
             </div>
         <?php endif ?>
         <div class="block-content">
             <div class="products-grid grid">
                 <ol class="product-items widget-product-grid">
-                    <?php foreach ($categories as $category) : ?>
+                    <?php foreach ($categories as $category): ?>
                         <li class="product-item">
                             <?php $image = $block->getImage($category); ?>
                             <div class="product-item-info">
-                                <a href="<?= $block->escapeHtmlAttr($category->getUrl()) ?>"
+                                <a href="<?= $escaper->escapeHtmlAttr($category->getUrl()) ?>"
                                    class="product-item-photo"
-                                   title="<?= $block->escapeHtmlAttr($category->getName()) ?>">
+                                   title="<?= $escaper->escapeHtmlAttr($category->getName()) ?>">
                                     <img
                                         src="<?= $image->getUrl() ?>"
-                                        alt="<?= $block->escapeHtmlAttr($category->getName()) ?>"
+                                        alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                                         loading="lazy"
                                         width="<?= $image->getWidth() ?>"
                                         style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
@@ -28,10 +28,10 @@
                                 <?php if ($block->getData('show_name') === 'true'): ?>
                                     <div class="product-item-details">
                                         <strong class="product-item-name">
-                                            <a title="<?= $block->escapeHtml($category->getName()) ?>"
-                                               href="<?= $block->escapeHtmlAttr($category->getUrl()) ?>"
+                                            <a title="<?= $escaper->escapeHtml($category->getName()) ?>"
+                                               href="<?= $escaper->escapeHtmlAttr($category->getUrl()) ?>"
                                                class="product-item-link">
-                                                <?= $block->escapeHtml($category->getName()) ?>
+                                                <?= $escaper->escapeHtml($category->getName()) ?>
                                             </a>
                                         </strong>
                                     </div>
