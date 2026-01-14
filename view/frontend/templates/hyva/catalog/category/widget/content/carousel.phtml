@@ -110,7 +110,7 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
                                     class="mx-auto"
                                     src="<?= $escaper->escapeHtmlAttr($image->getUrl()) ?>"
                                     alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
-                                    style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
+                                    style="aspect-ratio: <?= $escaper->escapeHtmlAttr($image->getWidth() . ' / ' . $image->getHeight()) ?>;"
                                     loading="lazy"
                                 />
                                 <?php if ($block->getData('show_name') === 'true'): ?>

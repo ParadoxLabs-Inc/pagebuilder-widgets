@@ -18,11 +18,11 @@
                                    class="product-item-photo"
                                    title="<?= $escaper->escapeHtmlAttr($category->getName()) ?>">
                                     <img
-                                        src="<?= $image->getUrl() ?>"
+                                        src="<?= $escaper->escapeHtmlAttr($image->getUrl()) ?>"
                                         alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                                         loading="lazy"
-                                        width="<?= $image->getWidth() ?>"
-                                        style="aspect-ratio: <?= $image->getWidth() . ' / ' . $image->getHeight() ?>;"
+                                        width="<?= $escaper->escapeHtmlAttr($image->getWidth()) ?>"
+                                        style="aspect-ratio: <?= $escaper->escapeHtmlAttr($image->getWidth() . ' / ' . $image->getHeight()) ?>;"
                                     />
                                 </a>
                                 <?php if ($block->getData('show_name') === 'true'): ?>
