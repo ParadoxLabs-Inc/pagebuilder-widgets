@@ -52,71 +52,30 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     protected $pager;
 
     /**
-     * @var HttpContext
-     */
-    protected $httpContext;
-
-    /**
-     * Product collection factory
-     *
-     * @var CollectionFactory
-     */
-    protected $categoryCollectionFactory;
-
-    /**
-     * @var \Magento\Catalog\Block\Category\View
-     */
-    protected $categoryView;
-
-    /**
-     * Json Serializer Instance
-     *
-     * @var Json
-     */
-    protected $json;
-
-    /**
-     * @var \Magento\Catalog\Helper\Image
-     */
-    protected $imageHelper;
-
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
      * @param Context $context
      * @param CollectionFactory $categoryCollectionFactory
      * @param HttpContext $httpContext
-     * @param \Magento\Catalog\Block\Category\View $categoryView
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
-     * @param \Magento\Catalog\Helper\Image $imageHelper
-     * @param \Magento\Framework\Registry $registry
+     * @param View $categoryView
+     * @param Json $json
+     * @param Image $imageHelper
+     * @param Registry $registry
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         Context $context,
-        CollectionFactory $categoryCollectionFactory,
-        HttpContext $httpContext,
-        View $categoryView,
-        Json $json,
-        Image $imageHelper,
-        Registry $registry,
+        protected readonly CollectionFactory $categoryCollectionFactory,
+        protected readonly \Magento\Framework\App\Http\Context $httpContext,
+        protected readonly View $categoryView,
+        protected readonly Json $json,
+        protected readonly Image $imageHelper,
+        protected readonly Registry $registry,
         array $data = []
     ) {
         parent::__construct(
             $context,
             $data
         );
-
-        $this->categoryCollectionFactory = $categoryCollectionFactory;
-        $this->httpContext               = $httpContext;
-        $this->json                      = $json;
-        $this->categoryView              = $categoryView;
-        $this->imageHelper               = $imageHelper;
-        $this->registry                  = $registry;
     }
 
     /**
@@ -227,9 +186,9 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     }
 
     /**
-     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @param Collection $collection
      * @return void
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function applyManualPositionSorting(Collection $collection): void
     {
@@ -250,9 +209,9 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     }
 
     /**
-     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @param Collection $collection
      * @return void
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function applyCategoryFilters(Collection $collection): void
     {
@@ -264,10 +223,10 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     }
 
     /**
-     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @param Collection $collection
      * @return void
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function applyCategoryFiltersEntityId(Collection $collection): void
     {
@@ -286,10 +245,10 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     }
 
     /**
-     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @param Collection $collection
      * @return void
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\StateException
+     * @throws LocalizedException
+     * @throws StateException
      */
     protected function applyCategoryFiltersParentId(Collection $collection): void
     {
@@ -306,10 +265,10 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     }
 
     /**
-     * @param \Magento\Catalog\Model\ResourceModel\Category\Collection $collection
+     * @param Collection $collection
      * @return void
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
      */
     public function applyCategoryFiltersContext(Collection $collection): void
     {
@@ -454,10 +413,10 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     }
 
     /**
-     * @param \Magento\Catalog\Model\Category $category
+     * @param Category $category
      * @param string $attributeCode
      * @param array $options
-     * @return \Magento\Catalog\Helper\Image
+     * @return Image
      */
     public function getImage(Category $category, string $attributeCode = 'image', array $options = [])
     {

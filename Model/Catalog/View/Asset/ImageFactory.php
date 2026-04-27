@@ -12,13 +12,14 @@
 
 namespace ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Asset;
 
+use Magento\Catalog\Model\View\Asset\Image;
 use Magento\Catalog\Model\View\Asset\VirtualCategoryImage;
 
 class ImageFactory extends \Magento\Catalog\Model\View\Asset\ImageFactory
 {
     /**
      * @param array $data
-     * @return \Magento\Catalog\Model\View\Asset\Image|\Magento\Catalog\Model\View\Asset\VirtualCategoryImage|mixed
+     * @return Image|\Magento\Catalog\Model\View\Asset\VirtualCategoryImage|mixed
      */
     public function create(array $data = [])
     {
