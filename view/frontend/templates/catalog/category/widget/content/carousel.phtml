@@ -23,7 +23,9 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
                                  alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                                  loading="lazy"
                                  width="<?= $escaper->escapeHtmlAttr($image->getWidth()) ?>"
-                                 style="aspect-ratio: <?= $escaper->escapeHtmlAttr($image->getWidth() . ' / ' . $image->getHeight()) ?>;"
+                                 style="aspect-ratio: <?= $escaper->escapeHtmlAttr(
+                                     $image->getWidth() . ' / ' . $image->getHeight()
+                                 ) ?>;"
                             />
                         </div>
                         <?php if ($block->getData('show_name') === 'true'): ?>
@@ -33,12 +35,14 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
                                     <?= $escaper->escapeHtml($category->getIndexedProductCount()) ?>
                                 </span>
                             </span>
-                            <p class="subtext"><?= /** @noEscape */ $category->getThumbnailSubtext() ?></p>
+                            <p class="subtext"><?= /** @noEscape */
+                                $category->getThumbnailSubtext() ?></p>
                         <?php endif ?>
                     </a>
                 </li>
             <?php endforeach ?>
         </div>
-        <?= /** @noEscape */ $block->getBlockHtml('pagebuilder.carousel.nav') ?>
+        <?= /** @noEscape */
+        $block->getBlockHtml('pagebuilder.carousel.nav') ?>
     </ul>
 <?php endif; ?>

@@ -20,7 +20,9 @@
                             alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                             loading="lazy"
                             width="<?= $escaper->escapeHtmlAttr($image->getWidth()) ?>"
-                            style="aspect-ratio: <?= $escaper->escapeHtmlAttr($image->getWidth() . ' / ' . $image->getHeight()) ?>;"
+                            style="aspect-ratio: <?= $escaper->escapeHtmlAttr(
+                                $image->getWidth() . ' / ' . $image->getHeight()
+                            ) ?>;"
                         />
                         <?php if ($block->getData('show_name') === 'true'): ?>
                             <div class="p-2"><?= $escaper->escapeHtml($category->getName()) ?></div>

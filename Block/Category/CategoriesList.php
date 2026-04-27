@@ -465,7 +465,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
             ? 'catalog/category/'
             : '';
 
-        $image  = $this->imageHelper->init($category, 'product_base_image', $options);
+        $image = $this->imageHelper->init($category, 'product_base_image', $options);
         $image->setImageFile($prefix . str_replace('/media/', '', (string)$category->getData($attributeCode)));
 
         return $image;

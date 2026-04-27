@@ -22,7 +22,9 @@
                                         alt="<?= $escaper->escapeHtmlAttr($category->getName()) ?>"
                                         loading="lazy"
                                         width="<?= $escaper->escapeHtmlAttr($image->getWidth()) ?>"
-                                        style="aspect-ratio: <?= $escaper->escapeHtmlAttr($image->getWidth() . ' / ' . $image->getHeight()) ?>;"
+                                        style="aspect-ratio: <?= $escaper->escapeHtmlAttr(
+                                            $image->getWidth() . ' / ' . $image->getHeight()
+                                        ) ?>;"
                                     />
                                 </a>
                                 <?php if ($block->getData('show_name') === 'true'): ?>
