@@ -1,4 +1,5 @@
 <?php /** @var \ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList $block */ ?>
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
 <?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()): ?>
     <?php $categories = $block->getCategoryCollection()->getItems() ?>
     <div class="widget-category-grid">
