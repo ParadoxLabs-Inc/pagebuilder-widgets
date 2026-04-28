@@ -83,6 +83,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      *
      * @return void
      */
+    #[\Override]
     protected function _construct()
     {
         parent::_construct();
@@ -102,6 +103,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
      * @throws NoSuchEntityException
      */
+    #[\Override]
     public function getCacheKeyInfo()
     {
         return [
@@ -125,6 +127,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     /**
      * @inheritdoc
      */
+    #[\Override]
     protected function _beforeToHtml()
     {
         $collection = $this->createCollection();
@@ -420,7 +423,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      */
     public function getImage(Category $category, string $attributeCode = 'image', array $options = [])
     {
-        $prefix = strpos((string)$category->getData($attributeCode), 'catalog/category/') === false
+        $prefix = !str_contains((string)$category->getData($attributeCode), 'catalog/category/')
             ? 'catalog/category/'
             : '';
 
@@ -443,6 +446,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      *
      * @return string
      */
+    #[\Override]
     public function getTemplate()
     {
         $template = (string)parent::getTemplate();
@@ -455,7 +459,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
                 CurrentTheme::class
             );
 
-            if ($currentTheme->isHyva() && strpos($template, 'hyva') === false) {
+            if ($currentTheme->isHyva() && !str_contains($template, 'hyva')) {
                 $template = str_replace('::', '::hyva/', $template);
             }
         }

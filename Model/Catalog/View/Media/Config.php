@@ -21,6 +21,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
      *
      * @return string
      */
+    #[\Override]
     public function getBaseMediaPathAddition()
     {
         return self::PATH;
@@ -31,6 +32,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
      *
      * @return string
      */
+    #[\Override]
     public function getBaseMediaUrlAddition()
     {
         return self::PATH;
@@ -39,6 +41,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
     /**
      * @inheritdoc
      */
+    #[\Override]
     public function getBaseMediaPath()
     {
         return '';
@@ -50,6 +53,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
      * @param string $file
      * @return string
      */
+    #[\Override]
     protected function _prepareFile($file)
     {
         if (is_string($file)) {

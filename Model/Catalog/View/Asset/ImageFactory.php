@@ -21,12 +21,13 @@ class ImageFactory extends \Magento\Catalog\Model\View\Asset\ImageFactory
      * @param array $data
      * @return Image|\Magento\Catalog\Model\View\Asset\VirtualCategoryImage|mixed
      */
+    #[\Override]
     public function create(array $data = [])
     {
         // If image path starts with catalog/category/, use a separate asset class
         if (isset($data['filePath'])
             && is_string($data['filePath'])
-            && strpos($data['filePath'], 'catalog/category/') !== false) {
+            && str_contains($data['filePath'], 'catalog/category/')) {
             return $this->_objectManager->create(
                 VirtualCategoryImage::class,
                 $data

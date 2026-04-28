@@ -1,11 +1,10 @@
 <?php
-/** @var CategoriesList $block */
-/** @var \Magento\Framework\Escaper $escaper */
-
-/** @var Escaper $escaper */
 
 use Magento\Framework\Escaper;
 use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
+
+/** @var CategoriesList $block */
+/** @var Escaper $escaper */
 
 ?>
 <?php if ($block->getCategoryCollection() && $block->getCategoryCollection()->getSize()): ?>
