@@ -32,6 +32,7 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\Element\Template;
 use Magento\Widget\Block\BlockInterface;
+use Override;
 
 /**
  * Catalog Products List widget block
@@ -83,7 +84,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      *
      * @return void
      */
-    #[\Override]
+    #[Override]
     protected function _construct()
     {
         parent::_construct();
@@ -103,7 +104,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
      * @throws NoSuchEntityException
      */
-    #[\Override]
+    #[Override]
     public function getCacheKeyInfo()
     {
         return [
@@ -127,7 +128,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     protected function _beforeToHtml()
     {
         $collection = $this->createCollection();
@@ -446,7 +447,7 @@ class CategoriesList extends Template implements BlockInterface, IdentityInterfa
      *
      * @return string
      */
-    #[\Override]
+    #[Override]
     public function getTemplate()
     {
         $template = (string)parent::getTemplate();

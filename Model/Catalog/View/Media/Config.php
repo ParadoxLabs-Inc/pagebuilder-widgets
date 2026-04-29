@@ -12,6 +12,8 @@
 
 namespace ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Media;
 
+use Override;
+
 class Config extends \Magento\Catalog\Model\Product\Media\Config
 {
     protected const PATH = 'catalog/category';
@@ -21,7 +23,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
      *
      * @return string
      */
-    #[\Override]
+    #[Override]
     public function getBaseMediaPathAddition()
     {
         return self::PATH;
@@ -32,7 +34,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
      *
      * @return string
      */
-    #[\Override]
+    #[Override]
     public function getBaseMediaUrlAddition()
     {
         return self::PATH;
@@ -41,7 +43,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
     /**
      * @inheritdoc
      */
-    #[\Override]
+    #[Override]
     public function getBaseMediaPath()
     {
         return '';
@@ -53,7 +55,7 @@ class Config extends \Magento\Catalog\Model\Product\Media\Config
      * @param string $file
      * @return string
      */
-    #[\Override]
+    #[Override]
     protected function _prepareFile($file)
     {
         if (is_string($file)) {

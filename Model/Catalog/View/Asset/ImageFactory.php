@@ -14,6 +14,7 @@ namespace ParadoxLabs\PageBuilderWidgets\Model\Catalog\View\Asset;
 
 use Magento\Catalog\Model\View\Asset\Image;
 use Magento\Catalog\Model\View\Asset\VirtualCategoryImage;
+use Override;
 
 class ImageFactory extends \Magento\Catalog\Model\View\Asset\ImageFactory
 {
@@ -21,7 +22,7 @@ class ImageFactory extends \Magento\Catalog\Model\View\Asset\ImageFactory
      * @param array $data
      * @return Image|\Magento\Catalog\Model\View\Asset\VirtualCategoryImage|mixed
      */
-    #[\Override]
+    #[Override]
     public function create(array $data = [])
     {
         // If image path starts with catalog/category/, use a separate asset class
