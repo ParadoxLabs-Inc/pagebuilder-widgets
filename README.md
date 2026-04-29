@@ -11,8 +11,8 @@ This module extends Magento Page Builder with additional widgets.
 Requirements
 ============
 
-* Magento 2.4 (or equivalent version of Adobe Commerce, Adobe Commerce Cloud, or Mage-OS)
-* PHP 7.4, 8.0, 8.1, or 8.2
+* Adobe Commerce / Magento Open Source 2.4.6 – 2.4.9 (or equivalent version of Adobe Commerce Cloud), or Mage-OS 2.0 – 3.0
+* PHP 8.1, 8.2, 8.3, 8.4, or 8.5
 * composer 2
 
 Features
