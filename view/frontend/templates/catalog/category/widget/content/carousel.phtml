@@ -35,14 +35,14 @@ use ParadoxLabs\PageBuilderWidgets\Block\Category\CategoriesList;
                                     <?= $escaper->escapeHtml($category->getIndexedProductCount()) ?>
                                 </span>
                             </span>
-                            <p class="subtext"><?= /** @noEscape */
+                            <p class="subtext"><?= /* @noEscape */
                                 $category->getThumbnailSubtext() ?></p>
                         <?php endif ?>
                     </a>
                 </li>
             <?php endforeach ?>
         </div>
-        <?= /** @noEscape */
+        <?= /* @noEscape */
         $block->getBlockHtml('pagebuilder.carousel.nav') ?>
     </ul>
 <?php endif; ?>
