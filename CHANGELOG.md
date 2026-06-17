@@ -1,5 +1,11 @@
 # ParadoxLabs_PageBuilderWidgets Changelog
 
+## 2.0.0 - Jun 17, 2026
+
+- Refactored for PHP 8.1–8.5 compatibility
+- Updated minimum requirement to Magento 2.4.6+ / PHP 8.1+
+- Fixed formatting and coding standard warnings
+
 ## 1.0.2 - Feb 27, 2025
 
 - Added Hyva-compatible category carousel template
